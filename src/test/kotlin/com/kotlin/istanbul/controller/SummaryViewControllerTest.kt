@@ -1,0 +1,3 @@
+package com.kotlin.istanbul.controller
+
+class SummaryViewControllerTest

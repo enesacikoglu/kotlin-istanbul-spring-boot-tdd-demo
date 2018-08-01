@@ -1,0 +1,13 @@
+# API
+api:
+  root: https://api.openweathermap.org/data/2.5
+
+# DATASOURCE
+spring:
+  datasource:
+    url: jdbc:h2:file:~/test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  mustache:
+    suffix: .html

@@ -9,8 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest
 class KotlinRestApiApplicationTests {
 
-	@Test
-	fun contextLoads() {
-	}
+    @Test
+    fun `SpringBoot ❤️ Kotlin `() {
+    }
 
 }
