@@ -43,4 +43,7 @@ class WeatherControllerMVCTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.weatherId", CoreMatchers.`is`(CoreMatchers.equalTo(61))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.weatherIcon", CoreMatchers.`is`(CoreMatchers.equalTo("Icon"))))
     }
+
+
+
 }
