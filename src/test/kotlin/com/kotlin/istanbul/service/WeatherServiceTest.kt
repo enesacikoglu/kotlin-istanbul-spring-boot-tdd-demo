@@ -28,7 +28,7 @@ class WeatherServiceTest {
         //Arrange
 
         val weatherEntity = WeatherEntity("Istanbul", "TR", 1L)
-        given(weatherEntityRepository.findById(1L))
+        given(weatherEntityRepository.findByCityAndCountryCode("Istanbul", "TR"))
                 .willReturn(Optional.ofNullable(weatherEntity))
 
         //Act
@@ -43,7 +43,7 @@ class WeatherServiceTest {
     fun `😓 it should throw domain not found exception when weather not found 😓`() {
         //Arrange
 
-        given(weatherEntityRepository.findById(1L))
+        given(weatherEntityRepository.findByCityAndCountryCode("Istanbul", "TR"))
                 .willReturn(Optional.empty())
 
         //Act

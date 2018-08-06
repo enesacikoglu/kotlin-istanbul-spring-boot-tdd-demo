@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class WeatherService(val weatherEntityRepository: WeatherEntityRepository) {
     fun getWeather(cityName: String, countryCode: String): WeatherDto {
-        val weatherEntity = weatherEntityRepository.findById(1L)
+        val weatherEntity = weatherEntityRepository.findByCityAndCountryCode(cityName, countryCode)
                 .orElseThrow { throw KotlinApiDomainNotFoundException(MessageKeyConstants.MESSAGE_KEY_DOMAIN_NOT_FOUND) }
         return WeatherDto.toDto(weatherEntity)
     }
