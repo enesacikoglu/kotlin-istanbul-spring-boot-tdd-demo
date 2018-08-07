@@ -2,6 +2,11 @@
 api:
   root: https://api.openweathermap.org/data/2.5
 
+swagger:
+  host:
+    url: localhost:8080
+    path:
+
 # DATASOURCE
 spring:
   datasource:

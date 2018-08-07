@@ -1,7 +1,10 @@
 package com.kotlin.istanbul.controller
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.kotlin.istanbul.domain.WeatherEntity
 import com.kotlin.istanbul.model.WeatherDto
 import com.kotlin.istanbul.service.WeatherService
+import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.CoreMatchers
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,7 +29,7 @@ class RestApiBestPracticeControllerTest {
     private lateinit var weatherService: WeatherService
 
     @Test
-    fun `💯 It Should Get Weather Of City When City Name And Code Given 💯`() {
+    fun `💯 It Should Get Weather Of City with given name and code 💯`() {
         //Arrange
         val requestBuilder = MockMvcRequestBuilders
                 .get("/api/rest/v1/weathers?city=Istanbul&countryCode=TR")
@@ -43,5 +46,49 @@ class RestApiBestPracticeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.`is`(CoreMatchers.equalTo(1))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.city", CoreMatchers.`is`(CoreMatchers.equalTo("Istanbul"))))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.countryCode", CoreMatchers.`is`(CoreMatchers.equalTo("TR"))))
+    }
+
+    @Test
+    fun `💯 It Should Get Weather Of City with given id 💯`() {
+        //Arrange
+        val requestBuilder = MockMvcRequestBuilders
+                .get("/api/rest/v1/weathers/1")
+                .accept(MediaType.APPLICATION_JSON)
+
+        given(weatherService.findById(1L))
+                .willReturn(WeatherDto("Istanbul", "TR", 1L))
+
+        //Act
+        val resultActions = mockMvc.perform(requestBuilder)
+
+        //Assert
+        resultActions.andExpect((MockMvcResultMatchers.status().is2xxSuccessful))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.`is`(CoreMatchers.equalTo(1))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.city", CoreMatchers.`is`(CoreMatchers.equalTo("Istanbul"))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.countryCode", CoreMatchers.`is`(CoreMatchers.equalTo("TR"))))
+    }
+
+
+    @Test
+    fun `💯 It Should Save Weather Of City with given Weather 💯`() {
+        //Arrange
+        val objectMapper = ObjectMapper()
+
+        val weatherDto = WeatherDto("Istanbul", "TR", 1L)
+
+        val requestBuilder = MockMvcRequestBuilders
+                .post("/api/rest/v1/weathers")
+                .content(objectMapper.writeValueAsBytes(weatherDto))
+                .contentType(MediaType.APPLICATION_JSON)
+
+
+        given(weatherService.save(weatherEntity = WeatherEntity("Istanbul", "TR")))
+                .willReturn(weatherDto)
+
+        //Act
+        val resultActions = mockMvc.perform(requestBuilder).andReturn()
+
+        //Assert
+        assertThat(resultActions.response.contentAsString).isEqualTo("1")
     }
 }

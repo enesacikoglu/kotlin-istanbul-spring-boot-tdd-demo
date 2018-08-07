@@ -26,7 +26,6 @@ class WeatherServiceTest {
     @Test
     fun `🙈 it should get weather of city with given name and code 🙈`() {
         //Arrange
-
         val weatherEntity = WeatherEntity("Istanbul", "TR", 1L)
         given(weatherEntityRepository.findByCityAndCountryCode("Istanbul", "TR"))
                 .willReturn(Optional.ofNullable(weatherEntity))
@@ -36,7 +35,9 @@ class WeatherServiceTest {
 
         //Assert
         assertThat(weatherDto).isNotNull
-        assertThat(weatherDto).isSameAs(weatherDto)
+        assertThat(weatherDto.city).isEqualTo("Istanbul")
+        assertThat(weatherDto.countryCode).isEqualTo("TR")
+        assertThat(weatherDto.id).isEqualTo(1L)
     }
 
     @Test
@@ -53,5 +54,40 @@ class WeatherServiceTest {
         assertThat(throwable).isNotNull()
         assertThat(throwable).isInstanceOf(KotlinApiDomainNotFoundException::class.java)
         assertThat(throwable.message).isEqualTo("weather.not.found.exception")
+    }
+
+    @Test
+    fun `🐓 it should get weather by id 🐓`() {
+        val weatherEntity = WeatherEntity("Istanbul", "TR", 1L)
+        given(weatherEntityRepository.findById(1L))
+                .willReturn(Optional.ofNullable(weatherEntity))
+
+        //Act
+        val weatherDto = weatherService.findById(1L)
+
+        //Assert
+        assertThat(weatherDto).isNotNull
+        assertThat(weatherDto.city).isEqualTo("Istanbul")
+        assertThat(weatherDto.countryCode).isEqualTo("TR")
+        assertThat(weatherDto.id).isEqualTo(1L)
+    }
+
+    @Test
+    fun `🏈 it should save weather 🏈`() {
+        val weatherEntity = WeatherEntity("Istanbul", "TR")
+
+        val savedWeatherEntity = WeatherEntity("Istanbul", "TR",61L)
+
+        given(weatherEntityRepository.save(weatherEntity))
+                .willReturn(savedWeatherEntity)
+
+        //Act
+        val weatherDto = weatherService.save(weatherEntity)
+
+        //Assert
+        assertThat(weatherDto).isNotNull
+        assertThat(weatherDto.city).isEqualTo("Istanbul")
+        assertThat(weatherDto.countryCode).isEqualTo("TR")
+        assertThat(weatherDto.id).isEqualTo(61L)
     }
 }
