@@ -1,5 +1,6 @@
 package com.kotlin.istanbul.controller.exception
 
+import com.kotlin.istanbul.constant.MessageKeyConstants.MESSAGE_KEY_GENERIC_ERROR
 import com.kotlin.istanbul.exception.KotlinApiDomainNotFoundException
 import com.kotlin.istanbul.exception.KotlinRestApiBusinessException
 import com.kotlin.istanbul.model.error.ErrorDto
@@ -20,7 +21,7 @@ class ExceptionHandlerControllerAdvice(var messageSource: MessageSource) {
     @ExceptionHandler(KotlinRestApiBusinessException::class)
     fun handleApiBusinessException(request: HttpServletRequest, kotlinRestApiBusinessException: KotlinRestApiBusinessException): ErrorDto {
         logger.debug("kotlinRestApiBusinessException : $kotlinRestApiBusinessException")
-        val message = messageSource.getMessage(kotlinRestApiBusinessException.message, null, Locale.ENGLISH)
+        val message = messageSource.getMessage(MESSAGE_KEY_GENERIC_ERROR, null, Locale.ENGLISH)
         return ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR.reasonPhrase, HttpStatus.INTERNAL_SERVER_ERROR.value(), message, request.requestURI, request.method)
 
     }

@@ -15,7 +15,7 @@ class SummaryViewController(val weatherApiService: WeatherApiService,
                             val weatherEntityRepository: WeatherEntityRepository) {
 
 
-    @GetMapping(value = "/dashboard")
+    @GetMapping(value = ["/dashboard"])
     fun summaryView(model: Map<String, Object>): ModelAndView {
         val map = mapOf("summary" to getSummaries())
         return ModelAndView("summary", map)
