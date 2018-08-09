@@ -33,6 +33,4 @@ class ExceptionHandlerControllerAdvice(var messageSource: MessageSource) {
         val errorDto = ErrorDto(HttpStatus.NOT_FOUND.reasonPhrase, HttpStatus.NOT_FOUND.value(), message, request.requestURI, request.method)
         return ResponseEntity(errorDto, HttpStatus.NOT_FOUND)
     }
-
-
 }
