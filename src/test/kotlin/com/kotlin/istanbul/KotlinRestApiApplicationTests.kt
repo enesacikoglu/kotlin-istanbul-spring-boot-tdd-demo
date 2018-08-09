@@ -12,5 +12,4 @@ class KotlinRestApiApplicationTests {
     @Test
     fun `SpringBoot ❤️ Kotlin `() {
     }
-
 }
